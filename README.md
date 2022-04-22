@@ -1,4 +1,4 @@
-### Hi there 👋
+### TalkieDokie React Native App - Watch Section
 
 <!--
 **talkiedokie/talkiedokie** is a ✨ _special_ ✨ repository because its `README.md` (this file) appears on your GitHub profile.
