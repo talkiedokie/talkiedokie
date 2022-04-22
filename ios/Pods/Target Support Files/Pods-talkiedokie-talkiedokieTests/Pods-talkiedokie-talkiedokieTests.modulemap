@@ -1,0 +1,6 @@
+module Pods_talkiedokie_talkiedokieTests {
+  umbrella header "Pods-talkiedokie-talkiedokieTests-umbrella.h"
+
+  export *
+  module * { export * }
+}
