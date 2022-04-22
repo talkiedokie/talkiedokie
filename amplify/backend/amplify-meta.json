@@ -1,0 +1,75 @@
+{
+  "providers": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-talkiedokie-dev-221519-authRole",
+      "UnauthRoleArn": "arn:aws:iam::543616335611:role/amplify-talkiedokie-dev-221519-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::543616335611:role/amplify-talkiedokie-dev-221519-authRole",
+      "Region": "ap-southeast-1",
+      "DeploymentBucketName": "amplify-talkiedokie-dev-221519-deployment",
+      "UnauthRoleName": "amplify-talkiedokie-dev-221519-unauthRole",
+      "StackName": "amplify-talkiedokie-dev-221519",
+      "StackId": "arn:aws:cloudformation:ap-southeast-1:543616335611:stack/amplify-talkiedokie-dev-221519/a5b785d0-c246-11ec-b5ef-0a2d8a151eda",
+      "AmplifyAppId": "d1q55iu6sxp86w"
+    }
+  },
+  "auth": {
+    "talkiedokie445ab6ca": {
+      "service": "Cognito",
+      "providerPlugin": "awscloudformation",
+      "dependsOn": [],
+      "customAuth": false,
+      "frontendAuthConfig": {
+        "socialProviders": [],
+        "usernameAttributes": [
+          "EMAIL"
+        ],
+        "signupAttributes": [
+          "EMAIL"
+        ],
+        "passwordProtectionSettings": {
+          "passwordPolicyMinLength": 8,
+          "passwordPolicyCharacters": []
+        },
+        "mfaConfiguration": "OFF",
+        "mfaTypes": [
+          "SMS"
+        ],
+        "verificationMechanisms": [
+          "EMAIL"
+        ]
+      },
+      "providerMetadata": {
+        "s3TemplateURL": "https://s3.amazonaws.com/amplify-talkiedokie-dev-221519-deployment/amplify-cfn-templates/auth/talkiedokie445ab6ca-cloudformation-template.json",
+        "logicalId": "authtalkiedokie445ab6ca"
+      },
+      "lastPushTimeStamp": "2022-04-22T14:29:45.416Z",
+      "output": {
+        "UserPoolId": "ap-southeast-1_GuD4JQYvh",
+        "AppClientIDWeb": "6odvu2b60pnaa08q17tooqs6ia",
+        "AppClientID": "6b9gmdlhiquap1b2nv1k1sglg7",
+        "IdentityPoolId": "ap-southeast-1:4b1fad54-f0a0-41d8-ac20-c55d9a29fcbb",
+        "UserPoolArn": "arn:aws:cognito-idp:ap-southeast-1:543616335611:userpool/ap-southeast-1_GuD4JQYvh",
+        "IdentityPoolName": "talkiedokie445ab6ca_identitypool_445ab6ca__dev",
+        "UserPoolName": "talkiedokie445ab6ca_userpool_445ab6ca"
+      },
+      "lastPushDirHash": "w5FQEdMHrq4zXoufjRTw+PJtlMQ="
+    }
+  },
+  "storage": {
+    "talkiedokie": {
+      "service": "S3",
+      "providerPlugin": "awscloudformation",
+      "dependsOn": [],
+      "lastPushTimeStamp": "2022-04-22T14:29:45.416Z",
+      "providerMetadata": {
+        "s3TemplateURL": "https://s3.amazonaws.com/amplify-talkiedokie-dev-221519-deployment/amplify-cfn-templates/storage/cloudformation-template.json",
+        "logicalId": "storagetalkiedokie"
+      },
+      "output": {
+        "BucketName": "uploads221519-dev",
+        "Region": "ap-southeast-1"
+      },
+      "lastPushDirHash": "sNNlBmXQrQOWxjfgkMyKTuqjwLw="
+    }
+  }
+}

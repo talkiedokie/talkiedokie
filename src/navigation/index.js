@@ -1,7 +1,7 @@
 import React from 'react'
 
-import {NavigationContainer} from '@react-navigation/native';
-import {createStackNavigator } from '@react-navigation/stack';
+import { NavigationContainer } from '@react-navigation/native';
+import { createStackNavigator } from '@react-navigation/stack';
 import HomeBottomTabNavigator from './homeBottomTabNavigator';
 import Home from '../screens/Home';
 import Camera from '../screens/Camera';
@@ -16,7 +16,7 @@ const RootNavigation = () => {
         screenOptions={{
           headerShown: false,
         }}
-        initialRouteName="Camera"
+        initialRouteName="Home"
       >
         <Stack.Screen name="Home" component={Home} />
         <Stack.Screen name="Camera" component={Camera} />

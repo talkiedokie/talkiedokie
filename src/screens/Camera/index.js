@@ -1,5 +1,5 @@
-import React, {useEffect, useState, useRef} from 'react';
-import {View, Text, TouchableOpacity, } from 'react-native';
+import React, { useEffect, useState, useRef } from 'react';
+import { View, Text, TouchableOpacity, Alert } from 'react-native';
 import { RNCamera } from 'react-native-camera';
 
 
@@ -12,72 +12,96 @@ import styles from './styles';
 
 import { useNavigation } from '@react-navigation/native';
 
+import { Storage } from 'aws-amplify';
 
 
+const uploadToStorage = async (imagePath) => {
+
+  try {
+    const response = await fetch(imagePath);
+    console.log("Fetch Response: " + response);
+    const blob = await response.blob();
+    console.log("BLOB: " + blob);
+
+    const filename = 'filename.mp4';
+    console.warn("Video has been successfully uploaded to AWS S3 Server");
+    const s3Response = await Storage.put(filename, blob);
+
+    console.log("S3 RESPONSE" + s3Response)
+    //Alert.alert("Video has been successfully uploaded to AWS S3 Server")
+
+
+  } catch (e) {
+    console.error(e)
+  }
+
+}
 
 
 const Camera = () => {
 
-    const navigation = useNavigation();
-    const [isRecording, setIsRecording] = useState(false);
-    const [cameraType, setCameraType] = useState('front');
-    const camera = useRef();
+  const navigation = useNavigation();
+  const [isRecording, setIsRecording] = useState(false);
+  const [cameraType, setCameraType] = useState('front');
+  const camera = useRef();
 
-    const onRecord = async () => {
-        if (isRecording){
-            camera.current.stopRecording();
-            
-        }else{
-            const data = await camera.current.recordAsync();
-            console.log("VIDEO URI: " + data.uri)
-            uploadToStorage(data.uri)
-        }
+  const onRecord = async () => {
+    if (isRecording) {
+      camera.current.stopRecording();
+
+    } else {
+      const data = await camera.current.recordAsync();
+      console.log("VIDEO URI: " + data.uri)
+      uploadToStorage(data.uri)
     }
+  }
 
-    const flipCamera = () => {
-        if (cameraType == "front"){
-            setCameraType("back")
-        }else{
-            setCameraType("front")
-        }
+
+
+  const flipCamera = () => {
+    if (cameraType == "front") {
+      setCameraType("back")
+    } else {
+      setCameraType("front")
     }
+  }
 
-    const closeWindow = () => {
-        navigation.goBack();
-    }
+  const closeWindow = () => {
+    navigation.goBack();
+  }
 
-    return (
-        <View style={styles.container}>
-          <RNCamera  
-            ref={camera}
-            onRecordingStart={() => setIsRecording(true)}
-            onRecordingEnd={() => setIsRecording(false)}
-            style={styles.preview}
-            type={cameraType}
-          />
-          <TouchableOpacity 
-            onPress={onRecord} 
-            style={isRecording ? styles.buttonStop : styles.buttonRecord}> 
-          </TouchableOpacity>
+  return (
+    <View style={styles.container}>
+      <RNCamera
+        ref={camera}
+        onRecordingStart={() => setIsRecording(true)}
+        onRecordingEnd={() => setIsRecording(false)}
+        style={styles.preview}
+        type={cameraType}
+      />
+      <TouchableOpacity
+        onPress={onRecord}
+        style={isRecording ? styles.buttonStop : styles.buttonRecord}>
+      </TouchableOpacity>
 
 
-          <TouchableOpacity 
-            onPress={closeWindow} 
-            style={styles.closeWindow}>
-                <View style={styles.iconTransparent}>
-                    <AntDesign name={'close'} size={20} color="white" />
-                </View> 
-          </TouchableOpacity>
+      <TouchableOpacity
+        onPress={closeWindow}
+        style={styles.closeWindow}>
+        <View style={styles.iconTransparent}>
+          <AntDesign name={'close'} size={20} color="white" />
+        </View>
+      </TouchableOpacity>
 
-          <TouchableOpacity 
-            onPress={flipCamera} 
-            style={styles.flipCamera}> 
-            <View style={styles.iconTransparent}>
-                <Ionicons name={'md-camera-reverse-outline'} size={20} color="white" />
-            </View>
-          </TouchableOpacity>
-      </View>
-    );
+      <TouchableOpacity
+        onPress={flipCamera}
+        style={styles.flipCamera}>
+        <View style={styles.iconTransparent}>
+          <Ionicons name={'md-camera-reverse-outline'} size={20} color="white" />
+        </View>
+      </TouchableOpacity>
+    </View>
+  );
 };
 
 export default Camera;

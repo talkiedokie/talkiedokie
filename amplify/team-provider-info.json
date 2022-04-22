@@ -1,0 +1,21 @@
+{
+  "dev": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-talkiedokie-dev-221519-authRole",
+      "UnauthRoleArn": "arn:aws:iam::543616335611:role/amplify-talkiedokie-dev-221519-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::543616335611:role/amplify-talkiedokie-dev-221519-authRole",
+      "Region": "ap-southeast-1",
+      "DeploymentBucketName": "amplify-talkiedokie-dev-221519-deployment",
+      "UnauthRoleName": "amplify-talkiedokie-dev-221519-unauthRole",
+      "StackName": "amplify-talkiedokie-dev-221519",
+      "StackId": "arn:aws:cloudformation:ap-southeast-1:543616335611:stack/amplify-talkiedokie-dev-221519/a5b785d0-c246-11ec-b5ef-0a2d8a151eda",
+      "AmplifyAppId": "d1q55iu6sxp86w"
+    },
+    "categories": {
+      "auth": {
+        "talkiedokie445ab6ca": {},
+        "true": {}
+      }
+    }
+  }
+}
