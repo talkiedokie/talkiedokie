@@ -60,7 +60,7 @@
       "service": "S3",
       "providerPlugin": "awscloudformation",
       "dependsOn": [],
-      "lastPushTimeStamp": "2022-04-22T14:29:45.416Z",
+      "lastPushTimeStamp": "2022-04-26T09:48:01.210Z",
       "providerMetadata": {
         "s3TemplateURL": "https://s3.amazonaws.com/amplify-talkiedokie-dev-221519-deployment/amplify-cfn-templates/storage/cloudformation-template.json",
         "logicalId": "storagetalkiedokie"

@@ -12,32 +12,6 @@ import styles from './styles';
 
 import { useNavigation } from '@react-navigation/native';
 
-import { Storage } from 'aws-amplify';
-
-
-const uploadToStorage = async (imagePath) => {
-
-  try {
-    const response = await fetch(imagePath);
-    console.log("Fetch Response: " + response);
-    const blob = await response.blob();
-    console.log("BLOB: " + blob);
-
-    const filename = 'filename.mp4';
-    console.warn("Video has been successfully uploaded to AWS S3 Server");
-    const s3Response = await Storage.put(filename, blob);
-
-    console.log("S3 RESPONSE" + s3Response)
-    //Alert.alert("Video has been successfully uploaded to AWS S3 Server")
-
-
-  } catch (e) {
-    console.error(e)
-  }
-
-}
-
-
 const Camera = () => {
 
   const navigation = useNavigation();
@@ -50,9 +24,25 @@ const Camera = () => {
       camera.current.stopRecording();
 
     } else {
-      const data = await camera.current.recordAsync();
-      console.log("VIDEO URI: " + data.uri)
-      uploadToStorage(data.uri)
+      const data = await camera.current.recordAsync({
+        quality: RNCamera.Constants.VideoQuality['1080p'],
+        maxDuration: 300, //30 Seconds
+        maxFileSize: 50*1024*1024, //up to 20 MB
+        orientation: "portrait",
+      }).then(data => {
+        console.log('data of startRecording', data)
+        console.log("VIDEO URI: " + data.uri)
+
+        
+        setIsRecording(false) //automatically stop the video
+
+        navigation.navigate("CreatePost", {videoUri: data.uri});
+        // navigation.goBack();
+      }).catch(e => {
+        console.log('catch of startRecording', e)
+      })
+      
+      
     }
   }
 

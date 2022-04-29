@@ -15,6 +15,7 @@
    Text,
    useColorScheme,
    View,
+   LogBox
  } from 'react-native';
  
  import {
@@ -30,7 +31,7 @@
  import 'react-native-gesture-handler';
  import Navigation from './src/navigation'
  
- 
+ LogBox.ignoreAllLogs();
  
  const App: () => Node = () => {
    const isDarkMode = useColorScheme() === 'dark';
