@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useRef } from 'react';
-import { View, Text, TouchableOpacity, Alert } from 'react-native';
+import { View, Text, TouchableOpacity, Alert, Button } from 'react-native';
 import { RNCamera } from 'react-native-camera';
 
 
@@ -7,10 +7,15 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 import EvilIcons from 'react-native-vector-icons/EvilIcons';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import AntDesign from 'react-native-vector-icons/AntDesign';
+import FontAwesome from 'react-native-vector-icons/FontAwesome';
 
 import styles from './styles';
 
 import { useNavigation } from '@react-navigation/native';
+// import ImagePicker from 'react-native-image-picker';
+
+import * as ImagePicker from "react-native-image-picker"
+
 
 const Camera = () => {
 
@@ -60,8 +65,46 @@ const Camera = () => {
     navigation.goBack();
   }
 
+  
+
+  const pickVideo = () => {
+    const options = {
+      title: 'Upload Video',
+      takePhotoButtonTitle: 'Record video',
+      chooseFromLibraryButtonTitle: 'Choose From Library',
+      mediaType: 'video',
+      storageOptions: {
+        skipBackup: true,
+        waitUntilSaved: true,
+      },
+    };
+
+    ImagePicker.launchImageLibrary(options, (response) => {
+      if (!response.didCancel && !response.error) {
+        const path = Platform.select({
+            android: { "value": response.path },
+            ios: { "value": response.uri }
+        }).value;
+        console.log("RESPONSE: " + response);
+        console.log("RESPONSE PATH: " + response.path);
+        console.log("RESPONSE URI: " + response.uri);
+        console.log(JSON.stringify(response))
+        console.log("RESPONSE ASSETS: " + JSON.stringify(response.assets));
+        console.log("RESPONSE ASSETS URI: " + response.assets[0].uri);
+        navigation.navigate("CreatePost", {videoUri: response.assets[0].uri});
+        
+        //console.log("FILE UPLOAD PATH : " + path);
+        
+        //dispatch(fileUpload({ local_path: path }));
+      }
+    });
+  };
+
   return (
     <View style={styles.container}>
+
+    
+
       <RNCamera
         ref={camera}
         onRecordingStart={() => setIsRecording(true)}
@@ -69,11 +112,6 @@ const Camera = () => {
         style={styles.preview}
         type={cameraType}
       />
-      <TouchableOpacity
-        onPress={onRecord}
-        style={isRecording ? styles.buttonStop : styles.buttonRecord}>
-      </TouchableOpacity>
-
 
       <TouchableOpacity
         onPress={closeWindow}
@@ -90,6 +128,23 @@ const Camera = () => {
           <Ionicons name={'md-camera-reverse-outline'} size={20} color="white" />
         </View>
       </TouchableOpacity>
+
+      
+        <TouchableOpacity
+          onPress={pickVideo}
+          style={styles.chooseGallery}>
+          <View style={styles.iconTransparent}>
+            <FontAwesome name={'photo'} size={20} color="white" />
+          </View>
+        </TouchableOpacity>
+
+        <TouchableOpacity
+          onPress={onRecord}
+          style={isRecording ? styles.buttonStop : styles.buttonRecord}>
+        </TouchableOpacity>
+
+        
+      
     </View>
   );
 };

@@ -12,6 +12,9 @@ import * as GlobalVariable from '../../Strings';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 
 
+
+import { Video } from 'react-native-compressor';
+
 const CreatePost = () => {
     const route = useRoute();
     const [description, setDescription] = useState('');
@@ -29,12 +32,16 @@ const CreatePost = () => {
     }
 
     useEffect( () => {
-       uploadToStorage(route.params.videoUri);
+        //const file = compressVideo(route.params.videoUri);
+        testCompress(route.params.videoUri);
+        //console.log("COMPRESSED VIDEO: " + file.path);
+        // uploadToStorage(route.params.videoUri);
     }, []);
 
     const uploadToStorage = async (imagePath) => {
-
+        
         try {
+
           const response = await fetch(imagePath);
           console.log("Fetch Response: " + response);
           const blob = await response.blob();
@@ -59,6 +66,54 @@ const CreatePost = () => {
         }
       
     }
+
+   
+
+
+    const testCompress = async (sourceVideo) => {
+        console.log("TEST COMPRESS");
+        console.log("sourceVideo: " + sourceVideo);
+        if (!sourceVideo) return;
+        try {
+          const dstUrl = await Video.compress(
+            sourceVideo,
+            {
+              compressionMethod: 'auto',
+              minimumFileSizeForCompress: 0,
+              //getCancellationId: (cancellationId) =>
+                //(cancellationIdRef.current = cancellationId),
+            },
+            (progress) => {
+                //setCompressingProgress(progress);
+            }
+          );
+          console.log({ dstUrl }, 'compression result');
+
+
+          const response = await fetch(dstUrl);
+          console.log("CV Fetch Response: " + response);
+          const blob = await response.blob();
+          console.log("CV  BLOB: " + blob);
+      
+          const filename = `${uuidv4()}.mp4`;
+          console.log("CV Filename: " + filename);
+          console.warn("CV Video has been successfully uploaded to AWS S3 Server");
+      
+          const s3Response = await Storage.put(filename, blob);
+          
+      
+          console.log("CV  S3 RESPONSE" + s3Response);
+          console.log("CV S3 RESPONSE KEY" + s3Response.key);
+           
+          setVideoKey(s3Response.key);
+          
+        } catch (error) {
+          console.log({ error }, 'compression error');
+          
+        }
+    };
+
+    
 
     const onPublish = async () => {
 

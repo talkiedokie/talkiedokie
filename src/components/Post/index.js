@@ -22,6 +22,8 @@ import { Storage } from 'aws-amplify';
 
 import VisibilitySensor from '@svanboxel/visibility-sensor-react-native';
 
+import * as GlobalVariable from '../../Strings';
+
 const Post = (props) => {
 
   //const {post} = props;
@@ -37,8 +39,6 @@ const Post = (props) => {
     setPaused(!paused);
   };
 
-
-
   const onProfilePress = () => {
   }
 
@@ -51,11 +51,49 @@ const Post = (props) => {
   const onInfoPress = () => {
   }
 
-  const onLikePress = () => {
-    //disabled for now
-    // const likesToAdd = isLiked ? -1 : 1;
-    // setPost({...post, likes: post.likes + likesToAdd});
-    // setIsLiked(!isLiked);
+
+  const onLikePress = async () => {
+
+    const POST_URL = GlobalVariable.base_url+'ajax.php';
+    var details = {
+      'action': 'like',
+      'id': post.id,
+      'operation': isLiked ? 'minus' : 'add',
+    };
+
+    var formBody = [];
+    for (var property in details) {
+        var encodedKey = encodeURIComponent(property);
+        var encodedValue = encodeURIComponent(details[property]);
+        formBody.push(encodedKey + "=" + encodedValue);
+    }
+    formBody = formBody.join("&");
+    
+    var final_url = POST_URL+"?"+formBody;
+    console.log("Like Function URL : " + final_url);
+
+    const result = await fetch( final_url, {
+        method: 'GET',
+        headers: {
+            //'Content-Type': 'application/json',
+            'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
+        },
+    });
+    const json = await result.json();
+  
+    if(json){
+        console.log("LIKE json " + json.message);
+        if(json.status['status_code'] == "1"){
+            console.warn(json.message);
+            console.warn(json.likes);
+            setPost({...post, likes: json.likes}); //setPost({...post, likes: post.likes + likesToAdd});
+        }else{
+            console.warn(json.message);
+        }
+    }else{
+        console.log('Unable to send data!');
+    }
+    setIsLiked(!isLiked);
   }
 
   const onSharePress = () => {
@@ -77,6 +115,9 @@ const Post = (props) => {
       console.log(videoUri);
     }else{
       setVideoUri(await Storage.get(post.video_uri));
+      const NEW_VIDEO_URI = GlobalVariable.s3_uri+post.video_uri;
+      console.log("NEW VIDEO URI: " + NEW_VIDEO_URI);
+      setVideoUri(NEW_VIDEO_URI);
     }
     
   }
@@ -109,6 +150,7 @@ const Post = (props) => {
             repeat={true}
             paused={paused}
             playInBackground={false}
+            ignoreSilentSwitch="ignore"
           />
           <View style={styles.overlay}></View>
           
@@ -133,7 +175,7 @@ const Post = (props) => {
                 /> */}
                 <TouchableOpacity style={styles.iconContainer} onPress={onLikePress}>
                   <View style={styles.iconTransparent}>
-                    <AntDesign name={'star'} size={20} color={isLiked ? 'red':'white'} />
+                    <AntDesign name={'star'} size={20} color={isLiked ? 'yellow':'white'} />
                   </View>
                   <Text style={styles.statsLabel}>{post.likes}</Text>
                 </TouchableOpacity>

@@ -25,6 +25,8 @@ const styles = StyleSheet.create({
         borderWidth: 10,
         borderColor: 'rgba(255, 255, 255, 0.7)',
         backgroundColor: '#ff4343',
+        alignItems: 'center',
+        alignContent: 'center',
     },
 
     buttonStop:{
@@ -35,6 +37,14 @@ const styles = StyleSheet.create({
         borderRadius: 3,
         borderColor: 'rgba(255, 255, 255, 0.8)',
         backgroundColor: '#ff4343',
+    },
+
+    chooseGallery: {
+        // alignSelf: 'flex-start',
+        position: 'absolute',
+        left: 0,
+        bottom: 10,
+        // marginVertical: 10,
     },
 
     flipCamera:{
@@ -48,6 +58,8 @@ const styles = StyleSheet.create({
         // borderColor: 'rgba(255, 255, 255, 0.2)',
         // backgroundColor: 'green',
     },
+
+    
 
     closeWindow:{
         position: 'absolute',
@@ -69,6 +81,10 @@ const styles = StyleSheet.create({
         shadowOpacity: 0.58,
         shadowRadius: 16.00,
         elevation: 24,
+    },
+
+    uploadButton: {
+
     },
 });
 

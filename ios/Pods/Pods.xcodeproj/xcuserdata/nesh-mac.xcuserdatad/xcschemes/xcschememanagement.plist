@@ -69,6 +69,11 @@
 			<key>isShown</key>
 			<false/>
 		</dict>
+		<key>NextLevelSessionExporter.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
 		<key>OpenSSL-Universal.xcscheme</key>
 		<dict>
 			<key>isShown</key>
@@ -294,7 +299,17 @@
 			<key>isShown</key>
 			<false/>
 		</dict>
+		<key>react-native-compressor.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
 		<key>react-native-get-random-values.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
+		<key>react-native-image-picker.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
