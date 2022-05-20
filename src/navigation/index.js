@@ -5,6 +5,9 @@ import { createStackNavigator } from '@react-navigation/stack';
 import HomeBottomTabNavigator from './homeBottomTabNavigator';
 import Home from '../screens/Home';
 import Camera from '../screens/Camera';
+import Comments from '../screens/Comments'
+
+
 import CreatePost from '../screens/CreatePost';
 
 
@@ -22,6 +25,7 @@ const RootNavigation = () => {
         <Stack.Screen name="Home" component={Home} />
         <Stack.Screen name="Camera" component={Camera} />
         <Stack.Screen name="CreatePost" component={CreatePost} options={{headerShown: true,}}/>
+        <Stack.Screen name="Comments" component={Comments} options={{headerShown: true,}}/>
       </Stack.Navigator>
     </NavigationContainer>
   );

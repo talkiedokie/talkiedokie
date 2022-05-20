@@ -29,7 +29,7 @@ const Post = (props) => {
   //const {post} = props;
   const [post, setPost] = useState(props.post);
   const [paused, setPaused] = useState(true);
-  const [isLiked, setIsLiked] = useState(false);
+  const [isLiked, setIsLiked] = useState(post.is_liked);
   const [videoUri, setVideoUri] = useState('');
 
   const navigation = useNavigation();
@@ -100,6 +100,7 @@ const Post = (props) => {
   }
 
   const onCommentPress = () => {
+    navigation.navigate("Comments", {video_id: post.id});
   }
 
 
@@ -119,7 +120,6 @@ const Post = (props) => {
       console.log("NEW VIDEO URI: " + NEW_VIDEO_URI);
       setVideoUri(NEW_VIDEO_URI);
     }
-    
   }
 
 
